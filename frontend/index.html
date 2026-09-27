@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Codebase AI</title>
+
+    <link
+        rel="stylesheet"
+        href="/style.css"
+    >
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="logo">
+                ✦
+            </div>
+
+            <div>
+
+                <div class="brand-name">
+                    Codebase AI
+                </div>
+
+                <div class="brand-subtitle">
+                    Developer Assistant
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SAMPLE PROJECT
+        ================================================== -->
+
+        <button
+            id="indexBtn"
+            class="new-project"
+        >
+
+            <span>＋</span>
+
+            Index Sample Project
+
+        </button>
+
+
+        <div
+            id="indexStatus"
+            class="status"
+        ></div>
+
+
+
+        <!-- =================================================
+             KNOWLEDGE BASE
+        ================================================== -->
+
+        <div class="sidebar-title">
+            KNOWLEDGE BASE
+        </div>
+
+
+        <div class="stats">
+
+
+            <div>
+
+                <strong id="fileCount">
+                    —
+                </strong>
+
+                <span>
+                    Files
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong id="chunkCount">
+                    —
+                </strong>
+
+                <span>
+                    Chunks
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             ADD TO KNOWLEDGE BASE
+        ================================================== -->
+
+        <div class="sidebar-title">
+            ADD TO KNOWLEDGE BASE
+        </div>
+
+
+
+        <!-- File / Folder buttons -->
+
+        <div class="upload-choice">
+
+
+            <!-- CHOOSE FILES -->
+
+            <label
+                class="choose-button"
+                for="files"
+            >
+
+                ＋ Choose Files
+
+            </label>
+
+
+
+            <!-- CHOOSE FOLDER -->
+
+            <label
+                class="choose-button"
+                for="folder"
+            >
+
+                ＋ Choose Folder
+
+            </label>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             FILE INPUT
+        ================================================== -->
+
+        <input
+            id="files"
+            type="file"
+            multiple
+            hidden
+        >
+
+
+
+        <!-- =================================================
+             FOLDER INPUT
+        ================================================== -->
+
+        <input
+            id="folder"
+            type="file"
+            webkitdirectory
+            directory
+            multiple
+            hidden
+        >
+
+
+
+        <!-- =================================================
+             SELECTED FILES / FOLDER
+        ================================================== -->
+
+        <div
+            id="selectedFiles"
+            class="selected-files"
+        >
+
+            No files selected
+
+        </div>
+
+
+
+        <!-- =================================================
+             UPLOAD BUTTON
+        ================================================== -->
+
+        <button
+            id="uploadBtn"
+            class="upload-button"
+        >
+
+            Upload & Index
+
+        </button>
+
+
+
+        <!-- =================================================
+             CANCEL BUTTON
+        ================================================== -->
+
+        <button
+            id="cancelUploadBtn"
+            class="cancel-button"
+            disabled
+        >
+
+            Cancel
+
+        </button>
+
+
+
+        <!-- =================================================
+             UPLOAD STATUS
+        ================================================== -->
+
+        <div
+            id="uploadStatus"
+            class="status"
+        ></div>
+
+
+
+        <!-- =================================================
+             SIDEBAR BOTTOM
+        ================================================== -->
+
+        <div class="sidebar-bottom">
+
+
+            <div class="connection">
+
+                <span></span>
+
+                API connected
+
+            </div>
+
+
+            <div class="tech">
+
+                FastAPI · ChromaDB · OpenAI
+
+            </div>
+
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main">
+
+
+
+        <!-- =================================================
+             TOP BAR
+        ================================================== -->
+
+        <header class="topbar">
+
+
+            <div class="page-title">
+
+                Codebase Assistant
+
+            </div>
+
+
+
+            <div class="online">
+
+                <span></span>
+
+                Online
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             CHAT
+        ================================================== -->
+
+        <section class="chat">
+
+
+
+            <!-- =================================================
+                 WELCOME
+            ================================================== -->
+
+            <div class="welcome">
+
+
+                <div class="welcome-icon">
+
+                    ✦
+
+                </div>
+
+
+                <h1>
+
+                    Ask your codebase
+
+                </h1>
+
+
+                <p>
+
+                    Ask questions about your code,
+                    documentation and project files.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 AI ANSWER
+            ================================================== -->
+
+            <div
+                id="answer"
+                class="answer"
+            ></div>
+
+
+
+            <!-- =================================================
+                 SOURCES
+            ================================================== -->
+
+            <div class="sources-wrapper">
+
+
+                <div class="sources-title">
+
+                    Sources
+
+                </div>
+
+
+                <ul id="sources"></ul>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 QUESTION INPUT
+            ================================================== -->
+
+            <div class="input-area">
+
+
+                <textarea
+                    id="question"
+                    rows="1"
+                    placeholder="Ask a question about your codebase..."
+                ></textarea>
+
+
+
+                <button
+                    id="askBtn"
+                    class="ask"
+                    title="Ask"
+                >
+
+                    ↑
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 INPUT NOTE
+            ================================================== -->
+
+            <div class="input-note">
+
+                Answers are generated from your indexed files.
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================== -->
+
+<script src="/app.js"></script>
+
+
+</body>
+
+</html>

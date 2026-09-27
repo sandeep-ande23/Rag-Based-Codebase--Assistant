@@ -1,0 +1,18 @@
+[
+  {
+    "question": "Where is the database engine created?",
+    "expected_path": "database.py"
+  },
+  {
+    "question": "How does the order service access the database?",
+    "expected_path": "orders.py"
+  },
+  {
+    "question": "What does validate_token do?",
+    "expected_path": "auth.py"
+  },
+  {
+    "question": "How is deployment described?",
+    "expected_path": "docs/architecture.md"
+  }
+]

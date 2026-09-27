@@ -1,0 +1,9 @@
+fastapi>=0.115
+uvicorn[standard]>=0.34
+openai>=1.100
+chromadb>=1.0
+python-dotenv>=1.0
+python-multipart>=0.0.20
+pypdf>=5.0
+pytest>=8.0
+httpx>=0.28
