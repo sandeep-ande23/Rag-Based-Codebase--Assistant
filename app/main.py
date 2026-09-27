@@ -97,17 +97,14 @@ api_key = os.getenv(
     "OPENAI_API_KEY"
 )
 
-
-if not api_key:
-
-    raise RuntimeError(
-        "OPENAI_API_KEY is not set. "
-        "Copy .env.example to .env and add your key."
+# The API key is optional during application import.
+# This allows CI tests to run without a real API key.
+openai_client = (
+    OpenAI(
+        api_key=api_key
     )
-
-
-openai_client = OpenAI(
-    api_key=api_key
+    if api_key
+    else None
 )
 
 
@@ -166,18 +163,15 @@ def index_folder():
     # Clear previous knowledge
     store.clear()
 
-
     sample = Path(
         "data/sample_repo"
     )
-
 
     indexed_files, indexed_chunks = (
         ingestion.ingest_path(
             sample
         )
     )
-
 
     return IngestResponse(
 
@@ -241,7 +235,6 @@ def upload(
             raw_name = (
                 upload.filename or ""
             )
-
 
             if not raw_name:
 
@@ -403,7 +396,6 @@ def ask(
             request.top_k
         )
     )
-
 
     return AskResponse(
 
