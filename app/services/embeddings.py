@@ -2,23 +2,39 @@ import os
 from openai import OpenAI
 from app.config import EMBEDDING_MODEL
 
+
 class EmbeddingService:
     def __init__(self, client: OpenAI = None):
         """
-        Initializes the OpenAI client. Reads OPENAI_BASE_URL if set in .env
-        to automatically support alternative providers like OpenRouter.
+        Initializes the OpenAI client.
+
+        If a client is provided, use it directly.
+        Otherwise, create one from environment variables.
+
+        OPENAI_BASE_URL is optional, so alternative providers
+        such as OpenRouter can be used.
         """
         if client:
             self.client = client
+            return
+
+        base_url = os.getenv("OPENAI_BASE_URL")
+        api_key = os.getenv("OPENAI_API_KEY")
+
+        # CI/tests may run without an API key.
+        if not api_key:
+            self.client = None
+            return
+
+        if base_url:
+            self.client = OpenAI(
+                api_key=api_key,
+                base_url=base_url
+            )
         else:
-            base_url = os.getenv("OPENAI_BASE_URL")
-            api_key = os.getenv("OPENAI_API_KEY")
-            
-            # Pass base_url only if defined in environment variables
-            if base_url:
-                self.client = OpenAI(api_key=api_key, base_url=base_url)
-            else:
-                self.client = OpenAI(api_key=api_key)
+            self.client = OpenAI(
+                api_key=api_key
+            )
 
     def embed_documents(self, texts: list[str]) -> list[list[float]]:
         response = self.client.embeddings.create(
